@@ -1,3 +1,6 @@
+######THIS CODE DOESNT WORK YET###########
+
+
 #include "M5Atom.h"
 #include "GPSAnalyse.h"
 #include <SPI.h>
