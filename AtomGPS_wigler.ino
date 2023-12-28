@@ -91,8 +91,8 @@ void loop() {
     sprintf(utc, "%04d-%02d-%02d %02d:%02d:%02d",
             gps.date.year(), gps.date.month(), gps.date.day(),
             gps.time.hour(), gps.time.minute(), gps.time.second());
-
-    int numNetworks = WiFi.scanNetworks();
+   //scanNetworks(bool async, bool show_hidden, bool passive, uint32_t max_ms_per_chan) 
+    int numNetworks = WiFi.scanNetworks(false,true,false,110); //credit J.Hewitt
     for (int i = 0; i < numNetworks; i++) {
       String currentMAC = WiFi.BSSIDstr(i);
       if (!isMACSeen(currentMAC)) {
