@@ -99,15 +99,16 @@ void loop() {
         macAddressArray[macArrayIndex++] = currentMAC;
         if (macArrayIndex >= maxMACs) macArrayIndex = 0;
 
-        String ssid = WiFi.SSID(i);
+        String ssid = "\"" + WiFi.SSID(i) + "\"";   //sanitize SSID
         String capabilities = getAuthType(WiFi.encryptionType(i));
         int channel = WiFi.channel(i);
         int rssi = WiFi.RSSI(i);
 
-        String dataString = currentMAC + "," + ssid + "," + capabilities + "," + utc + "," +
-                            String(channel) + "," + String(rssi) + "," + 
-                            String(lat, 6) + "," + String(lon, 6) + "," + 
-                            String(altitude, 2) + "," + String(accuracy, 2) + ",WIFI";
+        String dataString = currentMAC + "," + ssid + "," + capabilities + "," +
+                            utc + "," + String(channel) + "," + 
+                            String(rssi) + "," + String(lat, 6) + "," + 
+                            String(lon, 6) + "," + String(altitude, 2) + "," + 
+                            String(accuracy, 2) + ",WIFI";
 
         logData(dataString);
       }
