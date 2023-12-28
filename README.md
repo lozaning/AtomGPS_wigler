@@ -4,19 +4,20 @@
 AtomGPS_wigler is a wardriving tool initially **created by @lozaning** using the M5Stack Atom GPS kit. It's designed for Wi-Fi network scanning with LED status indicators.
 
 ## Features
-- Deduplication: Avoid logging multiple entries for the same MAC. 
-- LED status indicators for wardriving
+- Deduplication avoids logging multiple entries for the same MAC. 
+- LED status indicators for wardriving:
 
-  • Blink Purple: Waiting for fix
+  • Blink Purple: Waiting for GPS fix.
 
-  • Blink Green: GPS lock
+  • Steady Green: GPS locked, begin scan.
 
-  • Flash Blue: New network found
+  • Flash Blue: New network found.
   
-- Log to Wigle compatible .CSV file ***[dev branch](https://github.com/lukeswitz/AtomGPS_wigler/tree/dev-wardriver)***
+- Log to [Wigle](https://wigle.net) compatible .CSV 
 
 ## Prerequisites
 - M5Stack Atom GPS Kit
+- TF Card
 - ESPtool
 
 ## Installation
