@@ -45,12 +45,12 @@ void waitForGPSFix() {
     while (Serial1.available() > 0) {
       gps.encode(Serial1.read());
     }
-    M5.dis.drawpix(0, 0x800080); // Purple LED while waiting for GPS fix
+    M5.dis.drawpix(0, 0x800080);  // Purple LED while waiting for GPS fix
     delay(500);
-    M5.dis.clear(); // Clear LED after waiting
+    M5.dis.clear();  // Clear LED after waiting
     delay(500);
   }
-  M5.dis.drawpix(0, 0x00ff00); // Green LED indicates GPS fix
+  M5.dis.drawpix(0, 0x00ff00);  // Green LED indicates GPS fix
   Serial.println("GPS fix obtained.");
 }
 
@@ -91,34 +91,30 @@ void loop() {
     sprintf(utc, "%04d-%02d-%02d %02d:%02d:%02d",
             gps.date.year(), gps.date.month(), gps.date.day(),
             gps.time.hour(), gps.time.minute(), gps.time.second());
-   //scanNetworks(bool async, bool show_hidden, bool passive, uint32_t max_ms_per_chan) 
-    int numNetworks = WiFi.scanNetworks(false,true,false,110); //credit J.Hewitt
+    //scanNetworks(bool async, bool show_hidden, bool passive, uint32_t max_ms_per_chan)
+    int numNetworks = WiFi.scanNetworks(false, true, false, 110);  //credit J.Hewitt
     for (int i = 0; i < numNetworks; i++) {
       String currentMAC = WiFi.BSSIDstr(i);
       if (!isMACSeen(currentMAC)) {
         macAddressArray[macArrayIndex++] = currentMAC;
         if (macArrayIndex >= maxMACs) macArrayIndex = 0;
 
-        String ssid = "\"" + WiFi.SSID(i) + "\"";   //sanitize SSID
+        String ssid = "\"" + WiFi.SSID(i) + "\"";  //sanitize SSID
         String capabilities = getAuthType(WiFi.encryptionType(i));
         int channel = WiFi.channel(i);
         int rssi = WiFi.RSSI(i);
 
-        String dataString = currentMAC + "," + ssid + "," + capabilities + "," +
-                            utc + "," + String(channel) + "," + 
-                            String(rssi) + "," + String(lat, 6) + "," + 
-                            String(lon, 6) + "," + String(altitude, 2) + "," + 
-                            String(accuracy, 2) + ",WIFI";
+        String dataString = currentMAC + "," + ssid + "," + capabilities + "," + utc + "," + String(channel) + "," + String(rssi) + "," + String(lat, 6) + "," + String(lon, 6) + "," + String(altitude, 2) + "," + String(accuracy, 2) + ",WIFI";
 
         logData(dataString);
       }
     }
   } else {
-    M5.dis.drawpix(0, 0x800080); // Purple LED if waiting for GPS fix
+    M5.dis.drawpix(0, 0x800080);  // Purple LED if waiting for GPS fix
     delay(150);
     M5.dis.clear();
   }
-  delay(250); // Short delay for loop iteration
+  delay(250);  // Short delay for loop iteration
 }
 
 bool isMACSeen(const String& mac) {
