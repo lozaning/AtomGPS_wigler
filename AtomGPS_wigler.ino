@@ -115,6 +115,8 @@ void loop() {
     }
   } else {
     M5.dis.drawpix(0, 0x800080); // Purple LED if waiting for GPS fix
+    delay(150);
+    M5.dis.clear();
   }
   delay(250); // Short delay for loop iteration
 }
@@ -133,12 +135,15 @@ void logData(const String& data) {
   if (dataFile) {
     dataFile.println(data);
     dataFile.close();
-    M5.dis.drawpix(0, 0x0000ff); // Blue LED for successful write
-    delay(150);
-    M5.dis.clear();
-    Serial.println("Data written: " + data);
+    // M5.dis.drawpix(0, 0x0000ff); // Blue LED for successful write
+    // delay(150);
+    // M5.dis.clear();
+    // Serial.println("Data written: " + data);
   } else {
     Serial.println("Error opening " + fileName);
+    M5.dis.drawpix(0, 0xff0000);
+    delay(150);
+    M5.dis.clear();
   }
 }
 
