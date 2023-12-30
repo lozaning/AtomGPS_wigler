@@ -3,7 +3,12 @@
 ## Overview
 AtomGPS_wigler is a wardriving tool initially **created by @lozaning** using the M5Stack Atom GPS kit. It's designed for Wi-Fi network scanning with LED status indicators.
 
-## Features - v1.0-1.1
+## Prerequisites
+- M5Stack Atom GPS Kit (available at [DigiKey](https://www.digikey.com/en/products/detail/m5stack-technology-co-ltd/K043/13148796) and elsewhere)
+- TF Card (4GB standard, tested up to 32GB)
+- ESPtool or Arduino IDE
+
+### Features - v1.0-1.1
 - Deduplication avoids logging multiple entries for the same MAC. 
 - LED status indicators for wardriving:
 
@@ -17,20 +22,14 @@ AtomGPS_wigler is a wardriving tool initially **created by @lozaning** using the
   
 - Log to [Wigle](https://wigle.net) compatible .CSV
 
-  ## Features - v1.2 - (less verbose, more networks)
+ ### Features - v1.2 - (less verbose, more networks)
 
-  - Hidden network scanning
-  - Faster channel hopping
-  - LED differences:
-     • No blue flashes on network found
-     • Red on card write error
+- Hidden network scanning
+- Faster channel hopping
+- LED differences:
+   • No blue flashes on network found
+   • Red on card write error
   
-## Prerequisites
-- M5Stack Atom GPS Kit
-  - Available at DigiKey - https://www.digikey.com/en/products/detail/m5stack-technology-co-ltd/K043/13148796
-- TF Card (4GB standard, tested up to 32GB)
-- ESPtool or Arduino IDE
-
 ## Installation
 Clone the repository:
 ```bash
@@ -38,14 +37,25 @@ git clone https://github.com/lukeswitz/AtomGPS_wigler.git
 ```
 
 ## Flashing Instructions
-Identify your device's port:
-- On Linux/macOS:
-  ```bash
-  ls /dev/ttyUSB* /dev/cu.*
-  ```
-- On Windows, check COM port in Device Manager.
 
-Flash the firmware .bin version of your choice
+### Method 1: Arduino IDE
+- Dependencies:
+      - esp32 boards and the M5Atom library. [Installation Docs](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html). 
+- Open the .ino file in the IDE
+- Set Board: esp32 > M5Stack-Core-ESP32
+- Select your device port from the dropdown and press Upload/Flash. 
+
+### Method 2: Esptool
+- Identify your device's port:
+   - On Linux/macOS:
+  ```bash
+  ls /dev/ttyUSB*
+  # or 
+  /dev/cu.*
+  ```
+   - On Windows, check COM port in Device Manager.
+
+- Flash the firmware .bin version of your choice: 
 ```bash
 esptool.py --chip auto --port [PORT] erase_flash write_flash -z 0x1000 [FIRMWARE_FILE]
 ```
