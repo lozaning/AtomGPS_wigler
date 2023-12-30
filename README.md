@@ -27,7 +27,8 @@ AtomGPS_wigler is a wardriving tool initially **created by @lozaning** using the
   
 ## Prerequisites
 - M5Stack Atom GPS Kit
-- TF Card
+  - Available at DigiKey - https://www.digikey.com/en/products/detail/m5stack-technology-co-ltd/K043/13148796
+- TF Card (4GB standard, tested up to 32GB)
 - ESPtool or Arduino IDE
 
 ## Installation
