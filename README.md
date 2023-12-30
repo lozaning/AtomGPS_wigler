@@ -8,28 +8,6 @@ AtomGPS_wigler is a wardriving tool initially **created by @lozaning** using the
 - TF Card (4GB standard, tested up to 32GB)
 - ESPtool or Arduino IDE
 
-### Features - v1.0-1.1
-- Deduplication avoids logging multiple entries for the same MAC. 
-- LED status indicators for wardriving:
-
-  • Blink Red: SD card missing/failed. 
-
-  • Blink Purple: Waiting for GPS fix.
-
-  • Steady Green: GPS locked, begin scan.
-
-  • Flash Blue: New network found.
-  
-- Log to [Wigle](https://wigle.net) compatible .CSV
-
- ### Features - v1.2 - (less verbose, more networks)
-
-- Hidden network scanning
-- Faster channel hopping
-- LED differences:
-   • No blue flashes on network found
-   • Red on card write error
-  
 ## Installation
 Clone the repository:
 ```bash
@@ -43,7 +21,7 @@ git clone https://github.com/lukeswitz/AtomGPS_wigler.git
       - esp32 boards and the M5Atom library. [Installation Docs](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html). 
 - Open the .ino file in the IDE
 - Set Board: esp32 > M5Stack-Core-ESP32
-- Select your device port from the dropdown and press Upload/Flash. 
+- Select your device port from the dropdown and press Upload/Flash
 
 ### Method 2: Esptool
 - Identify your device's port:
