@@ -59,7 +59,7 @@ void initializeFile() {
   bool isNewFile = false;
 
   // create a date stamp for the filename
-  char fileDateStamp[12];
+  char fileDateStamp[16];
   sprintf(fileDateStamp, "%04d-%02d-%02d-",
           gps.date.year(), gps.date.month(), gps.date.day());
   
