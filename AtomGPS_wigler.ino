@@ -62,7 +62,7 @@ void initializeFile() {
   char fileDateStamp[16];
   sprintf(fileDateStamp, "%04d-%02d-%02d-",
           gps.date.year(), gps.date.month(), gps.date.day());
-  
+
   do {
     fileName = "/wifi-scans-" + String(fileDateStamp) + String(fileNumber) + ".csv";
     isNewFile = !SD.exists(fileName);
@@ -117,8 +117,9 @@ void loop() {
     }
   } else {
     M5.dis.drawpix(0, 0x800080);  // Purple LED if waiting for GPS fix
-    delay(150);
-    M5.dis.clear();
+    delay(500);
+    M5.dis.clear();  // Clear LED after waiting
+    delay(500);
   }
   delay(250);  // Short delay for loop iteration
 }
@@ -144,13 +145,13 @@ void logData(const String& data) {
   } else {
     Serial.println("Error opening " + fileName);
     M5.dis.drawpix(0, 0xff0000);
-    delay(150);
-    M5.dis.clear();
+    delay(500);
+    M5.dis.clear();  // Red flash for file write error
+    delay(500);
   }
 }
 
-char* getAuthType(uint8_t wifiAuth) {
-  static char authType[50];
+const char* getAuthType(uint8_t wifiAuth) {
   switch (wifiAuth) {
     case WIFI_AUTH_OPEN:
       return "[OPEN]";
