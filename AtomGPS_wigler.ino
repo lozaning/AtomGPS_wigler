@@ -19,11 +19,23 @@ void setup() {
   M5.begin(true, false, true);
   SPI.begin(23, 33, 19, -1);
 
+  unsigned long startMillis = millis();
+  const unsigned long blinkInterval = 500;
+  bool ledState = false;
+
   if (!SD.begin(-1, SPI, 40000000)) {
     Serial.println("SD Card initialization failed!");
-    M5.dis.drawpix(0, 0xff0000);
+    while (millis() - startMillis < 5000) {  // Continue blinking for 5 seconds
+      if (millis() - startMillis > blinkInterval) {
+        startMillis = millis();
+        ledState = !ledState;
+        M5.dis.drawpix(0, ledState ? 0xff0000 : 0x000000);  // Toggle red LED
+      }
+    }
     return;
   }
+
+  M5.dis.clear();  // Clear LED after blinking
   Serial.println("SD Card initialized.");
 
   WiFi.mode(WIFI_STA);
@@ -40,17 +52,28 @@ void setup() {
 }
 
 void waitForGPSFix() {
+  unsigned long lastBlink = 0;
+  const unsigned long blinkInterval = 300;  // Time interval for LED blinking
+  bool ledState = false;
+
   Serial.println("Waiting for GPS fix...");
   while (!gps.location.isValid()) {
-    while (Serial1.available() > 0) {
+    if (Serial1.available() > 0) {
       gps.encode(Serial1.read());
     }
-    M5.dis.drawpix(0, 0x800080);  // Purple LED while waiting for GPS fix
-    delay(500);
-    M5.dis.clear();  // Clear LED after waiting
-    delay(500);
+
+    // Non-blocking LED blink
+    if (millis() - lastBlink >= blinkInterval) {
+      lastBlink = millis();
+      ledState = !ledState;
+      M5.dis.drawpix(0, ledState ? 0x800080 : 0x000000);  // Toggle purple LED
+    }
   }
-  M5.dis.drawpix(0, 0x00ff00);  // Green LED indicates GPS fix
+
+  // Green LED indicates GPS fix
+  M5.dis.drawpix(0, 0x00ff00);
+  delay(200);  // Short delay to show green LED
+  M5.dis.clear();
   Serial.println("GPS fix obtained.");
 }
 
@@ -72,7 +95,7 @@ void initializeFile() {
   if (isNewFile) {
     File dataFile = SD.open(fileName, FILE_WRITE);
     if (dataFile) {
-      dataFile.println("WigleWifi-1.4,appRelease=1.100000,model=Developer Kit,release=1.100000F+00,device=M5ATOM,display=NONE,board=ESP32,brand=M5");
+      dataFile.println("WigleWifi-1.4,appRelease=1.300000,model=GPS Kit,release=1.100000F+00,device=M5ATOM,display=NONE,board=ESP32,brand=M5");
       dataFile.println("MAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type");
       dataFile.close();
       Serial.println("New file created: " + fileName);
@@ -88,6 +111,10 @@ void loop() {
   }
 
   if (gps.location.isValid()) {
+    M5.dis.drawpix(0, 0x00ff00);
+    delay(180);  // scan delay 
+    M5.dis.clear();
+
     float lat = gps.location.lat();
     float lon = gps.location.lng();
     float altitude = gps.altitude.meters();
@@ -121,7 +148,6 @@ void loop() {
     M5.dis.clear();  // Clear LED after waiting
     delay(500);
   }
-  delay(250);  // Short delay for loop iteration
 }
 
 bool isMACSeen(const String& mac) {
