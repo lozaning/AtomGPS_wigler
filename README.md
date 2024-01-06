@@ -43,3 +43,9 @@ You may need to execute the erase_flash and write_flash steps separately.
 
 ## Usage
 After flashing, the device starts scanning for Wi-Fi networks, indicating the status through LEDs and saving found networks to a Wigle.net compatible CSV file. 
+CSV files are written to the SD card with a UTC date stamp and a run number.
+
+LED Indicators:
+- The LED will light RED if the SD card is missing
+- The LED will flash PURPLE while waiting for a GPS fix
+- The LED will flash GREEN while scanning
