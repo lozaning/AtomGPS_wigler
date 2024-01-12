@@ -49,3 +49,7 @@ LED Indicators:
 - The LED will light RED if the SD card is missing
 - The LED will flash PURPLE while waiting for a GPS fix
 - The LED will flash GREEN while scanning
+
+## Community Experiences
+Lots of people are working with the code and the platform. Share your experiences or interesting changes you've made.
+- Kampf - https://zzq.org/?p=221
